@@ -1,0 +1,98 @@
+zabbix_export:
+  version: '5.4'
+  date: '2023-03-02T20:40:50Z'
+  groups:
+    -
+      uuid: 6f6799aa69e844b4b3918f779f2abf08
+      name: 'Zabbix servers'
+  templates:
+    -
+      uuid: 2365ee0a15c24e51a73e904dc825c2be
+      template: BGPalerter
+      name: BGPalerter
+      description: 'BGPalerter for zabbix server,'
+      groups:
+        -
+          name: 'Zabbix servers'
+      items:
+        -
+          uuid: 059fb74d74484bf5b674948125c047e2
+          name: 'bgpalerter.service error.log entries type ''error'' and ''info'''
+          type: ZABBIX_ACTIVE
+          key: 'log[/home/bgpalerter/logs/error.log,(error|info),,,skip]'
+          trends: '0'
+          value_type: LOG
+          description: 'Checks the /home/bgpalerter/logs/error.log file for logging with the entry ''error'' and ''info'''
+          logtimefmt: 'yyyy-MM-ddThh:mm:ss'
+          triggers:
+            -
+              uuid: 2dcb65e93dfe45aaa50512a212b1ff08
+              expression: 'find(/BGPalerter/log[/home/bgpalerter/logs/error.log,(error|info),,,skip],,,"The data rate is too high, messages are getting dropped due to full buffer.")=1'
+              recovery_mode: RECOVERY_EXPRESSION
+              recovery_expression: |
+                nodata(/BGPalerter/log[/home/bgpalerter/logs/error.log,(error|info),,,skip],1h)=1 or
+                find(/BGPalerter/log[/home/bgpalerter/logs/error.log,(error|info),,,skip],,,"Subscribed to beacons")=1 or find(/BGPalerter/log[/home/bgpalerter/logs/error.log,(error|info),,,skip],,,"Subscribed to monitored resources")=1 or find(/BGPalerter/log[/home/bgpalerter/logs/error.log,(error|info),,,skip],,,"ris connector connected")=1
+              name: 'BGPalerter  Data Rate too High'
+              priority: INFO
+              description: |
+                The data rate is too high and BGPalerter drop messages. 
+                The data rate needs to be increased.
+            -
+              uuid: 909ef3ce0ef34db08ec194354316fe87
+              expression: 'find(/BGPalerter/log[/home/bgpalerter/logs/error.log,(error|info),,,skip],,,"RIPE RIS disconnected")=1 or find(/BGPalerter/log[/home/bgpalerter/logs/error.log,(error|info),,,skip],,,"drop")=1'
+              recovery_mode: RECOVERY_EXPRESSION
+              recovery_expression: 'find(/BGPalerter/log[/home/bgpalerter/logs/error.log,(error|info),,,skip],,,"Subscribed to beacons")=1 or find(/BGPalerter/log[/home/bgpalerter/logs/error.log,(error|info),,,skip],,,"Subscribed to monitored resources")=1 or find(/BGPalerter/log[/home/bgpalerter/logs/error.log,(error|info),,,skip],,,"ris connector connected")=1'
+              name: 'BGPalerter Service Error'
+              priority: INFO
+              description: 'find(/BGPalerter/log[/home/bgpalerter/logs/error.log,(error|info),,,skip],,,"Subscribed to beacons")=1'
+        -
+          uuid: 58ea4257850c48b8852cab8d2bde68ff
+          name: 'bgpalerter.service reports.log entries for all Monitoring Channels'
+          type: ZABBIX_ACTIVE
+          key: 'log[/home/bgpalerter/logs/reports.log,(hijack|misconfiguration|newprefix|path|roa|rpki|visibility|announcement|verbose),,,skip]'
+          trends: '0'
+          value_type: LOG
+          description: 'https://christianiabpos-my.sharepoint.com/personal/radu_strelciuc_nexigroup_com/_layouts/15/guestaccess.aspx?guestaccesstoken=4L2Bxco9q%2BxvCmsFbVVSkDRP9hL1NBDSHlmhuZE1wWs%3D&docid=2_021c96e58c50b4e10a75456f7385f63a7&rev=1&e=H4WUjJ'
+          logtimefmt: 'yyyy-MM-ddThh:mm:ss'
+          triggers:
+            -
+              uuid: f19f3e28d0244620bc449a60c4cfcef2
+              expression: '(find(/BGPalerter/log[/home/bgpalerter/logs/reports.log,(hijack|misconfiguration|newprefix|path|roa|rpki|visibility|announcement|verbose),,,skip],,,"visibility")=1 or find(/BGPalerter/log[/home/bgpalerter/logs/reports.log,(hijack|misconfiguration|newprefix|path|roa|rpki|visibility|announcement|verbose),,,skip],,,"hijack")=1 or find(/BGPalerter/log[/home/bgpalerter/logs/reports.log,(hijack|misconfiguration|newprefix|path|roa|rpki|visibility|announcement|verbose),,,skip],,,"misconfiguration")=1 or find(/BGPalerter/log[/home/bgpalerter/logs/reports.log,(hijack|misconfiguration|newprefix|path|roa|rpki|visibility|announcement|verbose),,,skip],,,"newprefix")=1 or find(/BGPalerter/log[/home/bgpalerter/logs/reports.log,(hijack|misconfiguration|newprefix|path|roa|rpki|visibility|announcement|verbose),,,skip],,,"path")=1 or find(/BGPalerter/log[/home/bgpalerter/logs/reports.log,(hijack|misconfiguration|newprefix|path|roa|rpki|visibility|announcement|verbose),,,skip],,,"roa")=1 or find(/BGPalerter/log[/home/bgpalerter/logs/reports.log,(hijack|misconfiguration|newprefix|path|roa|rpki|visibility|announcement|verbose),,,skip],,,"rpki")=1 or find(/BGPalerter/log[/home/bgpalerter/logs/reports.log,(hijack|misconfiguration|newprefix|path|roa|rpki|visibility|announcement|verbose),,,skip],,,"announcement")=1 or find(/BGPalerter/log[/home/bgpalerter/logs/reports.log,(hijack|misconfiguration|newprefix|path|roa|rpki|visibility|announcement|verbose),,,skip],,,"verbose")=1) and nodata(/BGPalerter/log[/home/bgpalerter/logs/reports.log,(hijack|misconfiguration|newprefix|path|roa|rpki|visibility|announcement|verbose),,,skip],10)=0'
+              name: 'BGPalerter Report Found!'
+              priority: WARNING
+              manual_close: 'YES'
+        -
+          uuid: 4d6ac9fb98cd476487561277aa47ef0d
+          name: 'bgpalerter.service status.log entries type ''status'''
+          type: ZABBIX_ACTIVE
+          key: 'log[/home/bgpalerter/logs/status.log,status,,,skip]'
+          trends: '0'
+          value_type: LOG
+          description: 'Checks the /home/bgpalerter/status.log file for logging messages that contains the entry ''status'''
+          logtimefmt: 'yyyy-MM-ddThh:mm:ss'
+          triggers:
+            -
+              uuid: 2efeed0a948348379cf57ad2020ebafd
+              expression: 'find(/BGPalerter/log[/home/bgpalerter/logs/status.log,status,,,skip],,,"bgpalerter.service is active and running")=0'
+              recovery_mode: RECOVERY_EXPRESSION
+              recovery_expression: 'find(/BGPalerter/log[/home/bgpalerter/logs/status.log,status,,,skip],,,"bgpalerter.service is active and running")=1'
+              name: 'BGPalerter is Down'
+              priority: WARNING
+        -
+          uuid: 0a137267781849d18a4d2e6801c7dbbd
+          name: 'bgpalerter.service status.log entries type ''update'''
+          type: ZABBIX_ACTIVE
+          key: 'log[/home/bgpalerter/logs/status.log,update,,,skip]'
+          delay: 0;md1h8m30
+          trends: '0'
+          value_type: LOG
+          description: 'Checks the /home/bgpalerter/status.log file every month for logging messages that contains the entry ''update'''
+          logtimefmt: 'yyyy-MM-ddThh:mm:ss'
+          triggers:
+            -
+              uuid: 95f0e2663b9c4ee59fa2732da55f3028
+              expression: 'find(/BGPalerter/log[/home/bgpalerter/logs/status.log,update,,,skip],,,"BGPalerter New Version")=1 or find(/BGPalerter/log[/home/bgpalerter/logs/status.log,update,,,skip],,,"BGPalerter Error")=1'
+              recovery_mode: RECOVERY_EXPRESSION
+              recovery_expression: 'find(/BGPalerter/log[/home/bgpalerter/logs/status.log,update,,,skip],,,"BGPalerter Up To Date")=1'
+              name: 'BGPalerter Service Update available'
+              priority: INFO
