@@ -1,0 +1,15 @@
+[Unit]
+Description=BGPalerter update check
+After=network.target
+
+[Service]
+Type=simple
+Restart=on-failure
+RestartSec=30s
+StartLimitBurst=2
+User=bgpalerter
+WorkingDirectory=/home/bgpalerter
+ExecStart=/home/bgpalerter/bgpalerter-check-update.sh
+
+[Install]
+WantedBy=multi-user.target

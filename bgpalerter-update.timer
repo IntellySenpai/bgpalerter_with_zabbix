@@ -1,0 +1,15 @@
+[Unit]
+Description=Check for BGPalerter updates every start of month
+RefuseManualStart=no
+RefuseManualStop=no
+
+[Timer]
+Persistent=true
+#Run 1h after boot
+OnBootSec=3600
+#Run at the beginning of each month at 3:15AM
+OnCalendar=*-*-01 03:15:00
+Unit=bgpalerter-update.service
+
+[Install]
+WantedBy=timers.target

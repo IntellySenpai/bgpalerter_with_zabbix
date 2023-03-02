@@ -1,0 +1,12 @@
+[Unit]
+Description=BGPalerter check status
+After=network.target
+
+[Service]
+Type=simple
+User=bgpalerter
+WorkingDirectory=/home/bgpalerter
+ExecStart=/home/bgpalerter/bgpalerter-check-status.sh
+
+[Install]
+WantedBy=multi-user.target

@@ -1,0 +1,15 @@
+[Unit]
+Description=Check status of BGPalerter every 5 minutes
+RefuseManualStart=no
+RefuseManualStop=no
+
+[Timer]
+Persistent=true
+#Run 10 minutes after boot
+OnBootSec=600
+#Run every minute
+OnCalendar=*-*-* *:0/5:0
+Unit=bgpalerter-check.service
+
+[Install]
+WantedBy=timers.target

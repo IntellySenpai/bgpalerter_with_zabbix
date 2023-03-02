@@ -1,0 +1,17 @@
+[Unit]
+Description=BGPalerter
+After=network.target
+
+[Service]
+Description=BGPalerter Service
+Type=simple
+Restart=on-failure
+RestartSec=30s
+StartLimitBurst=5
+StartLimitIntervalSec=10s
+User=bgpalerter
+WorkingDirectory=/home/bgpalerter
+ExecStart=/home/bgpalerter/bgpalerter-linux-x64
+
+[Install]
+WantedBy=multi-user.target
