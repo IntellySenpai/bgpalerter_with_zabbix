@@ -1,5 +1,5 @@
 # bgpalerter_with_zabbix
-This is a simple guide that uses https://github.com/nttgin/BGPalerter and https://www.zabbix.com/documentation/current/en/manual/config/items/itemtypes/log_items to deploy BGPalerter and integrate it into Zabbix monitoring.
+This is a simple guide that uses [BGPalerter](https://github.com/nttgin/BGPalerter) and [Zabbix Log Monitoring feature](https://www.zabbix.com/documentation/current/en/manual/config/items/itemtypes/log_items) to deploy BGPalerter and integrate it into Zabbix monitoring.
 
 Shortly about BGPalerter:
 BGP and RPKI monitoring tool. Pre-configured for real-time detection of visibility loss, RPKI invalid announcements, hijacks, ROA misconfiguration, and more.
@@ -30,7 +30,7 @@ chmod +x bgpalerter-linux-x64
 ```
 
 # Create and import configuration files
-More about config.yml, prefixes.yml here https://github.com/nttgin/BGPalerter/blob/main/docs/configuration.md
+More about config.yml, prefixes.yml here: [BGPalerter Configuration](https://github.com/nttgin/BGPalerter/blob/main/docs/configuration.md)
 | Name | Description |
 | --- | --- |
 | config.yml | BGPalerter Main configuration file |
