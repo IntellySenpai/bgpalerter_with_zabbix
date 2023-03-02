@@ -92,15 +92,22 @@ bgpalerter:x:1003:1003::/home/bgpalerter:/sbin/nologin
 # Logging of BGPalerter
 All BGPalerter services are logging into the ```/home/bgpalerter/logs``` directory.
 
+| Name | Description |
+| --- | --- |
+| reports.log | Reports about AS, Prefix Hijacks, ROA Expiration etc...  |
+| error.log | bgpalerter.service execution errors and debug |
+| status.log | bgpalerter process for status and update checking |
 
+# Zabbix Monitoring of Logs
+BGPalerter is deployed on the same host as Zabbix Server. Now we need to define in Zabbix WEB UI our Items, Alerts and Triggers.
 
+Crete Template:
+![9d16e3ad-0547-42f1-9dde-1d02a9ed518d](https://user-images.githubusercontent.com/43334417/222545752-0e5f7780-213a-4b80-87e6-fd0370340b03.png)
 
+Create Items:
+![e201d27c-8371-42f2-85d7-c94090c7551c](https://user-images.githubusercontent.com/43334417/222545923-888c3667-5314-4b57-89e4-bd62c1c7fa97.png)
 
+Create Triggers:
+![89f06d91-26de-4445-a674-4361756a6e03](https://user-images.githubusercontent.com/43334417/222546405-5d7e3fab-1494-4115-b8da-c30a670f7250.png)
 
-
-
-
-
-
-
-
+That's it!
