@@ -1,4 +1,4 @@
-# bgpalerter_with_zabbix
+# BGPalerter Deployment and Integration to Zabbix NMS
 This is a simple guide that uses [BGPalerter](https://github.com/nttgin/BGPalerter) and [Zabbix Log Monitoring feature](https://www.zabbix.com/documentation/current/en/manual/config/items/itemtypes/log_items) to deploy BGPalerter and integrate it into Zabbix monitoring.
 
 Shortly about BGPalerter:
